@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body p-5">
                     <form id="registrationForm" class="needs-validation" novalidate 
-                          hx-post="/register" hx-target="#registration-response" hx-swap="innerHTML">
+                          hx-post="/register" hx-target="#static-app-content" hx-swap="innerHTML">
                         <!-- Name Fields -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -104,32 +104,6 @@
                             </div>
                         </div>
 
-                        <!-- Security Acknowledgment -->
-                        <div class="mb-4">
-                            <div class="form-check form-check-lg">
-                                <input class="form-check-input" type="checkbox" id="securityAgreement" required>
-                                <label class="form-check-label " for="securityAgreement">
-                                    I acknowledge that I will use this system responsibly for legitimate enemy tracking purposes
-                                </label>
-                                <div class="invalid-feedback">
-                                    You must acknowledge the security agreement.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Terms and Privacy -->
-                        <div class="mb-4">
-                            <div class="form-check form-check-lg">
-                                <input class="form-check-input" type="checkbox" id="termsAgreement" required>
-                                <label class="form-check-label " for="termsAgreement">
-                                    I agree to the <a href="#" class="text-danger">Terms of Service</a> and <a href="#" class="text-danger">Privacy Policy</a>
-                                </label>
-                                <div class="invalid-feedback">
-                                    You must accept the terms and privacy policy.
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Response Container -->
                         <div id="registration-response" class="mb-3"></div>
 
@@ -210,36 +184,27 @@
 
     // Form submission
     form.addEventListener('submit', function(event) {
-        event.preventDefault();
-        
         // Run custom validations
         validateEmailMatch();
         validatePasswordMatch();
         validatePasswordStrength();
         
-        if (form.checkValidity() === false) {
-            event.stopPropagation();
-        } else {
-            // Show success state
-            const btn = form.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-check me-2"></i>Agent Activated Successfully';
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-success');
-            btn.disabled = true;
-            
-            // Here you would normally submit to your backend
-            // For now, just show success feedback
-            setTimeout(function() {
-                btn.innerHTML = originalText;
-                btn.classList.remove('btn-success');
-                btn.classList.add('btn-danger');
-                btn.disabled = false;
-                // Optionally redirect or show next steps
-            }, 3000);
-        }
+        // Check both HTML5 validity and custom validations
+        const hasCustomErrors = confirmEmail.validationMessage || 
+                               confirmPassword.validationMessage || 
+                               password.validationMessage;
         
-        form.classList.add('was-validated');
+        if (form.checkValidity() === false || hasCustomErrors) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+        } else {
+            // Show loading state and let HTMX handle submission
+            const btn = form.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+            btn.disabled = true;
+            // Form will submit via HTMX
+        }
     }, false);
 })();
 </script>
