@@ -184,27 +184,32 @@
 
     // Form submission
     form.addEventListener('submit', function(event) {
+        // Always prevent default first
+        event.preventDefault();
+        
         // Run custom validations
         validateEmailMatch();
         validatePasswordMatch();
         validatePasswordStrength();
         
-        // Check both HTML5 validity and custom validations
-        const hasCustomErrors = confirmEmail.validationMessage || 
-                               confirmPassword.validationMessage || 
-                               password.validationMessage;
-        
-        if (form.checkValidity() === false || hasCustomErrors) {
-            event.preventDefault();
-            event.stopPropagation();
-            form.classList.add('was-validated');
-        } else {
-            // Show loading state and let HTMX handle submission
+        // Check if form is valid
+        if (form.checkValidity()) {
+            // Show loading state and submit via HTMX
             const btn = form.querySelector('button[type="submit"]');
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
             btn.disabled = true;
-            // Form will submit via HTMX
+            
+            // Create form data and submit via HTMX
+            const formData = new FormData(form);
+            htmx.ajax('POST', '/register', {
+                values: Object.fromEntries(formData),
+                target: '#static-app-content',
+                swap: 'innerHTML'
+            });
+        } else {
+            // Show validation errors
+            form.classList.add('was-validated');
         }
-    }, false);
+    });
 })();
 </script>
