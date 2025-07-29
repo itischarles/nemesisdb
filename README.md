@@ -2,6 +2,12 @@
 
 A simple Node.js web application for user management with authentication. Built for an interview technical assessment.
 
+---
+**Note:**
+
+This application is production-ready: beautify UI and clickable links. The pages are responsive on smaller devices.
+
+
 ## What it is
 
 This is a basic user management system where people can register, login, and access a dashboard. I built it using HTMX instead of React because I wanted to show what I can actually do rather than copy-paste code I don't understand. HTMX gives you that smooth single-page feel without the complexity.
