@@ -110,6 +110,7 @@ If I had more time, here are some things I'd improve:
 
 ## A note on React
 
-The original requirements mentioned React and Redux, but I chose HTMX instead. I don't have React experience and didn't want to submit something I couldn't explain or maintain. HTMX achieves similar user experience goals with technology I actually understand.
+The original requirements mentioned React and Redux, but I chose HTMX instead. I don't have React experience and don't want to submit something I can't explain or maintain. 
+HTMX achieves similar user experience goals with technology I actually understand.
 
 
