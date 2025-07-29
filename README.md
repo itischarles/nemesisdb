@@ -112,5 +112,4 @@ If I had more time, here are some things I'd improve:
 
 The original requirements mentioned React and Redux, but I chose HTMX instead. I don't have React experience and didn't want to submit something I couldn't explain or maintain. HTMX achieves similar user experience goals with technology I actually understand.
 
-This is interview project, not production code.
 
