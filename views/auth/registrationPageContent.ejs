@@ -1,0 +1,245 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-danger mb-3">Join the Intelligence Network</h1>
+                <p class="lead text-muted">
+                    Create your secure access credentials to begin tracking your enemies and rivals.
+                </p>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-user-shield me-2"></i>
+                        Agent Registration Protocol
+                    </h3>
+                </div>
+                <div class="card-body p-5">
+                    <form id="registrationForm" class="needs-validation" novalidate 
+                          hx-post="/register" hx-target="#registration-response" hx-swap="innerHTML">
+                        <!-- Name Fields -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="firstName" class="form-label ">
+                                    <i class="fas fa-user me-1"></i>
+                                    First Name
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="firstName" 
+                                       name="firstName" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Please provide your first name.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="lastName" class="form-label ">
+                                    <i class="fas fa-user me-1"></i>
+                                    Last Name
+                                </label>
+                                <input type="text" class="form-control form-control-lg" id="lastName" 
+                                       name="lastName" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Please provide your last name.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email Fields -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="email" class="form-label ">
+                                    <i class="fas fa-envelope me-1"></i>
+                                    Email Address (Username)
+                                </label>
+                                <input type="email" class="form-control form-control-lg" id="email" 
+                                       name="email" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Please provide a valid email address.
+                                </div>
+                                <div class="form-text ">
+                                    This will be your username for accessing Nemesis DB.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="confirmEmail" class="form-label ">
+                                    <i class="fas fa-envelope-open me-1"></i>
+                                    Confirm Email Address
+                                </label>
+                                <input type="email" class="form-control form-control-lg" id="confirmEmail" 
+                                       name="confirmEmail" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Email addresses must match.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password Fields -->
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+                                <label for="password" class="form-label ">
+                                    <i class="fas fa-lock me-1"></i>
+                                    Set Password
+                                </label>
+                                <input type="password" class="form-control form-control-lg" id="password" 
+                                       name="password" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Password must be at least 8 characters long.
+                                </div>
+                                <div class="form-text">
+                                    Minimum 8 characters with letters, numbers, and symbols.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="confirmPassword" class="form-label ">
+                                    <i class="fas fa-lock me-1"></i>
+                                    Confirm Password
+                                </label>
+                                <input type="password" class="form-control form-control-lg" id="confirmPassword" 
+                                       name="confirmPassword" placeholder="" required>
+                                <div class="invalid-feedback">
+                                    Passwords must match.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Acknowledgment -->
+                        <div class="mb-4">
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="securityAgreement" required>
+                                <label class="form-check-label " for="securityAgreement">
+                                    I acknowledge that I will use this system responsibly for legitimate enemy tracking purposes
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must acknowledge the security agreement.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Privacy -->
+                        <div class="mb-4">
+                            <div class="form-check form-check-lg">
+                                <input class="form-check-input" type="checkbox" id="termsAgreement" required>
+                                <label class="form-check-label " for="termsAgreement">
+                                    I agree to the <a href="#" class="text-danger">Terms of Service</a> and <a href="#" class="text-danger">Privacy Policy</a>
+                                </label>
+                                <div class="invalid-feedback">
+                                    You must accept the terms and privacy policy.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Response Container -->
+                        <div id="registration-response" class="mb-3"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-danger btn-lg w-100 mb-3">
+                            <i class="fas fa-user-plus me-2"></i>
+                            Activate Agent Account
+                        </button>
+
+                        <!-- Login Link -->
+                        <div class="text-center">
+                            <p class="text-muted mb-0">
+                                Already have clearance? 
+                                <a href="/login" class="text-danger  text-decoration-none"
+                                   hx-get="/login" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">
+                                    Access Your Account
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation and submission
+(function() {
+    'use strict';
+    
+    const form = document.getElementById('registrationForm');
+    const email = document.getElementById('email');
+    const confirmEmail = document.getElementById('confirmEmail');
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
+
+    // Custom validation for email confirmation
+    function validateEmailMatch() {
+        if (email.value !== confirmEmail.value) {
+            confirmEmail.setCustomValidity('Email addresses must match');
+        } else {
+            confirmEmail.setCustomValidity('');
+        }
+    }
+
+    // Custom validation for password confirmation
+    function validatePasswordMatch() {
+        if (password.value !== confirmPassword.value) {
+            confirmPassword.setCustomValidity('Passwords must match');
+        } else {
+            confirmPassword.setCustomValidity('');
+        }
+    }
+
+    // Custom validation for password strength
+    function validatePasswordStrength() {
+        const pwd = password.value;
+        if (pwd.length < 8) {
+            password.setCustomValidity('Password must be at least 8 characters long');
+        } else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(pwd)) {
+            password.setCustomValidity('Password must contain both letters and numbers');
+        } else {
+            password.setCustomValidity('');
+        }
+    }
+
+    // Add event listeners
+    email.addEventListener('input', validateEmailMatch);
+    confirmEmail.addEventListener('input', validateEmailMatch);
+    password.addEventListener('input', function() {
+        validatePasswordStrength();
+        validatePasswordMatch();
+    });
+    confirmPassword.addEventListener('input', validatePasswordMatch);
+
+    // Form submission
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        // Run custom validations
+        validateEmailMatch();
+        validatePasswordMatch();
+        validatePasswordStrength();
+        
+        if (form.checkValidity() === false) {
+            event.stopPropagation();
+        } else {
+            // Show success state
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check me-2"></i>Agent Activated Successfully';
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-success');
+            btn.disabled = true;
+            
+            // Here you would normally submit to your backend
+            // For now, just show success feedback
+            setTimeout(function() {
+                btn.innerHTML = originalText;
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-danger');
+                btn.disabled = false;
+                // Optionally redirect or show next steps
+            }, 3000);
+        }
+        
+        form.classList.add('was-validated');
+    }, false);
+})();
+</script>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nemesis DB - Track Your Enemies & Foes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="/" hx-get="/home" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">
+            <i class="fas fa-database me-2 text-danger"></i>
+            <strong>Nemesis DB</strong>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/" hx-get="/home" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about" hx-get="/about" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact" hx-get="/contact" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register" hx-get="/register" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-danger ms-2 px-3" href="/login" hx-get="/login" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Features Section -->
+<div  id="static-app-content" hx-get="/home" hx-trigger="load">
+        <!-- htmx content loads here -->
+</div>
+
+<!-- Stats Section -->
+<section class="bg-light py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <h3 class="display-4 fw-bold text-danger">10K+</h3>
+                <p class="lead">Tracked Enemies</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="display-4 fw-bold text-danger">99.9%</h3>
+                <p class="lead">Revenge Success</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="display-4 fw-bold text-danger">1M+</h3>
+                <p class="lead">Enemy Profiles</p>
+            </div>
+            <div class="col-md-3">
+                <h3 class="display-4 fw-bold text-danger">24/7</h3>
+                <p class="lead">Support</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-danger text-white py-5">
+    <div class="container text-center">
+        <h2 class="fw-bold mb-4">Ready to Track Your Enemies?</h2>
+        <p class="lead mb-4">Join thousands who use Nemesis DB to keep tabs on their foes and rivals.</p>
+        <a href="/register" class="btn btn-light btn-lg me-3" hx-get="/register" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Start Tracking</a>
+        <a href="/contact" class="btn btn-outline-light btn-lg" hx-get="/contact" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">Get Intel</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="fas fa-database me-2 text-danger"></i>
+                    <h5 class="mb-0">Nemesis DB</h5>
+                </div>
+                <p class="text-white-50">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                </p>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0 text-white">&copy; 2024 Nemesis DB. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="mb-0 text-white">Made with <i class="fas fa-heart text-danger"></i> for interview tech stage</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Add smooth scrolling behavior
+document.documentElement.style.scrollBehavior = 'smooth';
+
+// Optional: Add HTMX event listener for additional scroll control
+document.body.addEventListener('htmx:afterSwap', function(evt) {
+    if (evt.detail.target.id === 'static-app-content') {
+        // Small delay to ensure content is rendered before scrolling
+        setTimeout(() => {
+            evt.detail.target.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }, 100);
+    }
+});
+</script>
+</body>
+</html>

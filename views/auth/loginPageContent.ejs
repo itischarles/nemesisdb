@@ -1,0 +1,155 @@
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-xl-5">
+            <!-- Header Section -->
+            <div class="text-center mb-5">
+                <h1 class="display-5 fw-bold text-danger mb-3">Agent Access Portal</h1>
+                <p class="lead text-muted">
+                    Enter your credentials to access your enemy tracking operations.
+                </p>
+            </div>
+
+            <!-- Success Message -->
+            <% if (typeof successMessage !== 'undefined' && successMessage) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-check-circle me-3"></i>
+                    <div>
+                        <strong>Welcome, Agent!</strong> <%= successMessage %>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            <% } %>
+
+            <!-- Login Form -->
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="card-title mb-0">
+                        <i class="fas fa-shield-alt me-2"></i>
+                        Secure Authentication
+                    </h3>
+                </div>
+                <div class="card-body p-5">
+                    <form id="loginForm" class="needs-validation" novalidate 
+                          hx-post="/login" hx-target="#login-response" hx-swap="innerHTML">
+                        <!-- Email/Username Field -->
+                        <div class="mb-4">
+                            <label for="loginEmail" class="form-label ">
+                                <i class="fas fa-envelope me-1"></i>
+                                Email Address (Username)
+                            </label>
+                            <input type="email" class="form-control form-control-lg" id="loginEmail" 
+                                   name="email" placeholder="" required autofocus>
+                            <div class="invalid-feedback">
+                                Please provide a valid email address.
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="mb-4">
+                            <label for="loginPassword" class="form-label ">
+                                <i class="fas fa-lock me-1"></i>
+                                Security Passphrase
+                            </label>
+                            <div class="input-group">
+                                <input type="password" class="form-control form-control-lg" id="loginPassword" 
+                                       name="password" placeholder="" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="invalid-feedback">
+                                Please enter your password.
+                            </div>
+                        </div>
+
+                        <!-- Remember Me and Forgot Password -->
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="rememberAgent">
+                                <label class="form-check-label " for="rememberAgent">
+                                    Remember this agent
+                                </label>
+                            </div>
+                            <a href="#" class="text-danger text-decoration-none ">
+                                Forgot credentials?
+                            </a>
+                        </div>
+
+                        <!-- Response Container -->
+                        <div id="login-response" class="mb-3"></div>
+
+                        <!-- Login Button -->
+                        <button type="submit" class="btn btn-danger btn-lg w-100 mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>
+                            Access Intelligence Network
+                        </button>
+
+                        <!-- Registration Link -->
+                        <div class="text-center">
+                            <p class="text-muted mb-0">
+                                Need security clearance? 
+                                <a href="/register" class="text-danger  text-decoration-none"
+                                   hx-get="/register" hx-target="#static-app-content" hx-swap="innerHTML show:#static-app-content:top">
+                                    Register New Agent
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+// Login form functionality
+(function() {
+    'use strict';
+    
+    const form = document.getElementById('loginForm');
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('loginPassword');
+    const toggleIcon = document.getElementById('toggleIcon');
+
+    // Password visibility toggle
+    togglePassword.addEventListener('click', function() {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    });
+
+
+
+    // Form submission - just show loading state, let form submit normally
+    form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            form.classList.add('was-validated');
+        } else {
+            // Show loading state
+            const btn = form.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Authenticating...';
+            btn.disabled = true;
+            // Let form submit normally
+        }
+    });
+
+    // Enhanced security: Clear form on page unload
+    window.addEventListener('beforeunload', function() {
+        form.reset();
+    });
+})();
+</script>

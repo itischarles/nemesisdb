@@ -1,0 +1,20 @@
+<div class="d-flex align-items-center mb-4 p-3 bg-light rounded">
+    <div class="user-avatar me-3">
+        <%= user.firstName.charAt(0) + user.lastName.charAt(0) %>
+    </div>
+    <div class="flex-grow-1">
+        <h6 class="mb-0"><%= user.firstName %> <%= user.lastName %></h6>
+        <small class="text-muted">Agent ID: #<%= user.id %></small>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-link text-muted p-0" type="button" data-bs-toggle="dropdown">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" hx-get="/user/profile" hx-target="#main-content" hx-swap="innerHTML"><i class="fas fa-user me-2"></i>Profile</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+        </ul>
+    </div>
+</div>
