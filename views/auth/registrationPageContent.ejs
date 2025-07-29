@@ -18,8 +18,7 @@
                     </h3>
                 </div>
                 <div class="card-body p-5">
-                    <form id="registrationForm" class="needs-validation" novalidate 
-                          hx-post="/register" hx-target="#static-app-content" hx-swap="innerHTML">
+                    <form id="registrationForm" class="needs-validation" novalidate>
                         <!-- Name Fields -->
                         <div class="row">
                             <div class="col-md-6 mb-4">
@@ -133,7 +132,6 @@
 </div>
 
 <script>
-// Form validation and submission
 (function() {
     'use strict';
     
@@ -143,73 +141,56 @@
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirmPassword');
 
-    // Custom validation for email confirmation
-    function validateEmailMatch() {
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        let isValid = true;
+        
+        // Check if emails match
         if (email.value !== confirmEmail.value) {
             confirmEmail.setCustomValidity('Email addresses must match');
+            isValid = false;
         } else {
             confirmEmail.setCustomValidity('');
         }
-    }
-
-    // Custom validation for password confirmation
-    function validatePasswordMatch() {
+        
+        // Check if passwords match
         if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity('Passwords must match');
+            isValid = false;
         } else {
             confirmPassword.setCustomValidity('');
         }
-    }
-
-    // Custom validation for password strength
-    function validatePasswordStrength() {
-        const pwd = password.value;
-        if (pwd.length < 8) {
+        
+        // Check password length
+        if (password.value.length < 8) {
             password.setCustomValidity('Password must be at least 8 characters long');
-        } else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(pwd)) {
-            password.setCustomValidity('Password must contain both letters and numbers');
+            isValid = false;
         } else {
             password.setCustomValidity('');
         }
-    }
-
-    // Add event listeners
-    email.addEventListener('input', validateEmailMatch);
-    confirmEmail.addEventListener('input', validateEmailMatch);
-    password.addEventListener('input', function() {
-        validatePasswordStrength();
-        validatePasswordMatch();
-    });
-    confirmPassword.addEventListener('input', validatePasswordMatch);
-
-    // Form submission
-    form.addEventListener('submit', function(event) {
-        // Always prevent default first
-        event.preventDefault();
         
-        // Run custom validations
-        validateEmailMatch();
-        validatePasswordMatch();
-        validatePasswordStrength();
-        
-        // Check if form is valid
-        if (form.checkValidity()) {
-            // Show loading state and submit via HTMX
-            const btn = form.querySelector('button[type="submit"]');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
-            btn.disabled = true;
-            
-            // Create form data and submit via HTMX
-            const formData = new FormData(form);
-            htmx.ajax('POST', '/register', {
-                values: Object.fromEntries(formData),
-                target: '#static-app-content',
-                swap: 'innerHTML'
-            });
-        } else {
-            // Show validation errors
-            form.classList.add('was-validated');
+        // Check HTML5 validation
+        if (!form.checkValidity()) {
+            isValid = false;
         }
+        
+        if (!isValid) {
+            form.classList.add('was-validated');
+            return;
+        }
+        
+        // Submit form
+        const btn = form.querySelector('button[type="submit"]');
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+        btn.disabled = true;
+        
+        const formData = new FormData(form);
+        htmx.ajax('POST', '/register', {
+            values: Object.fromEntries(formData),
+            target: '#static-app-content',
+            swap: 'innerHTML'
+        });
     });
 })();
 </script>
